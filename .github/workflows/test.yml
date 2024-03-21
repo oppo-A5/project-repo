@@ -1,0 +1,42 @@
+name: Build and Deploy Java Code to AWS EC2
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build-and-deploy-java-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install JDK and Maven
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+
+      - name: Build Java code
+        run: mvn -B clean package --file pom.xml
+
+      # Use an SSH key to connect to the EC2 instance
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Replace <instance-ip> with your EC2 instance's public IP address or DNS
+      - name: Deploy Java Code
+        run: |
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ec2-user@13.233.41.97 'mkdir -p /var/www/html/
+          scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa target/*.jar ec2-user@13.233.41.97:/var/www/html/
+
+         
