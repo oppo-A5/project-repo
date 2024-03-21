@@ -38,6 +38,6 @@ jobs:
       - name: Deploy Java Code
         run: |
           ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ec2-user@13.233.41.97 'mkdir -p /var/www/html/'
-          scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa target/*.jar ec2-user@13.233.41.97:/var/www/html/
+          scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa target/*.war ec2-user@13.233.41.97:/var/www/html/
 
          
