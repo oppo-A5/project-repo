@@ -41,7 +41,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.ID_RSA }}
 
-      # Replace <instance-ip> with your EC2 instance's public IP address or DNS
+      # Replace <instance-ip> with your EC2 instance's public IP address or Dns
       - name: Deploy Java Code
         run: |
           sudo ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ubuntu@13.127.46.252 'mkdir -p /usr/share/nginx/html'
