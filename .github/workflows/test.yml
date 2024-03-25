@@ -39,7 +39,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.ID_RSA }}
 
       # Replace <instance-ip> with your EC2 instance's public IP address or DNS
       - name: Deploy Java Code
