@@ -28,6 +28,13 @@ jobs:
       - name: Build Java code
         run: mvn -B clean package --file pom.xml
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1 
+
       # Use an SSH key to connect to the EC2 instance
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
